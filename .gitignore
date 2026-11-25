@@ -1,0 +1,35 @@
+# Caché y archivos compilados de Python
+__pycache__/
+*.py[cod]
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+
+# Variables de entorno y secretos
+.env
+.env.*
+!.env.example
+
+# Datos locales
+/datos/servidores.json
+
+# Registros
+*.log
+logs/
+
+# Archivos de pruebas y herramientas
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Configuración personal de editores
+.idea/
+.vscode/
+
+# Archivos temporales
+*.tmp
+*.bak
