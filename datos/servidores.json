@@ -1,0 +1,12 @@
+[
+    {
+        "nombre": "web-01",
+        "cpu": 2,
+        "estado": "inactivo"
+    },
+    {
+        "nombre": "db-01",
+        "cpu": 8,
+        "estado": "activo"
+    }
+]
