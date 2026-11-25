@@ -8,7 +8,7 @@ class Administrador:
     def __init__(self, servidores: list[Servidor]):
         for indice, servidor in enumerate(servidores):
             if not isinstance(servidor, Servidor):
-                raise TypeError
+                raise TypeError("El dato no es un Servidor")
             if servidor in servidores[indice+1:]:
                 raise ValueError("Servidor duplicado")
         copia = copy.copy(servidores)

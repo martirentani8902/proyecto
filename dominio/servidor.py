@@ -43,12 +43,12 @@ class Servidor:
             try:
                 num = int(numero)
             except ValueError:
-                raise ValueError("El dato tiene que ser un entero")
+                raise ValueError("La CPU debe ser un numero entero")
             else:
                 if num > 0:
                     self._cpu = num
                 else:
-                    raise excepciones.EsNumeroNegativo("La cantidad de CPU no puede ser negativa")
+                    raise excepciones.EsNumeroNegativo("La CPU no puede ser negativa")
         else:
             self._cpu = numero
 
@@ -64,7 +64,7 @@ class Servidor:
             try:
                 num = int(numero)
             except ValueError:
-                raise excepciones.DatoNoEsNumerico("El dato tiene que ser un entero")
+                raise excepciones.DatoNoEsNumerico("La RAM tiene que ser un numero")
             else:
                 if num > 0:
                     self._ram = num

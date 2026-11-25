@@ -8,7 +8,6 @@ class ServicioServidores:
     def __init__(self, repositorio: RepositorioServidores):
         self._repositorio = repositorio
 
-
     def agregar_servidor(self, servidor: Servidor) -> None:
         inventario = self._repositorio.cargar()
         admin = Administrador(inventario)
