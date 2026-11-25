@@ -1,14 +1,15 @@
-from servidores.modelos import Servidor
-from servidores import excepciones
+from dominio.servidor import Servidor
+from dominio import excepciones
 
 def agregar_servidores(admin):
     print("CARGA DE DATOS DE SERVIDORES:\n\n")
     while True:
         nombre = input("Ingrese el nombre del servidor: ")
         cpu = input("Ingrese la cantidad de CPUs del servidor: ")
+        ram = input("Ingrese la cantidad de RAM del servidor (GB): ")
         estado = input("Ingrese el estado del servidor (activo o inactivo): ")
         try:
-            servidor = Servidor(nombre, cpu, estado)
+            servidor = Servidor(nombre, cpu, ram, estado)
         except ValueError as error:
             print("Error de creacion del servidor:", error)
             break

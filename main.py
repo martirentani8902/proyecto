@@ -1,12 +1,10 @@
-from servidores.modelos import Servidor
-from servidores.administrador import administrador
-from servidores import metricas, excepciones, operaciones
-from main.casos import imprimir_inventario, agregar_servidores, eliminar_servidor
+from presentacion.consola import imprimir_inventario, agregar_servidores, eliminar_servidor
+from dominio.administrador import Administrador
 
 print("Comienzo del programa")
 print()
 
-admin = administrador([])
+admin = Administrador([])
 
 while True:
     try:

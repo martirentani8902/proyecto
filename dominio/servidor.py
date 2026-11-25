@@ -1,12 +1,19 @@
+from dominio import validaciones
+from dominio import excepciones
+from dominio.estados import EstadoServidor
+
 class Servidor:
     def __init__(self, nombre, cpu, ram, estado):
-        self._nombre = nombre
-        self.cpu = cpu
-        self.ram = ram
-        if estado in ("activo", "inactivo", "mantenimiento"):
-            self._estado = estado
-        else:
-            raise ValueError("Estado invalido")
+            if validaciones.es_nombre_valido(nombre):
+                self._nombre = nombre
+                self.cpu = cpu
+                self.ram = ram
+                try:
+                    self._estado = EstadoServidor(estado.lower())
+                except ValueError:
+                    raise excepciones.EstadoInvalido("Estado invalido")
+                else:
+                    return None
 
     def __eq__(self, otro):
         if not isinstance(otro, Servidor):
@@ -17,67 +24,83 @@ class Servidor:
         return (f"Nombre: {self._nombre}\nCPU: {self._cpu}\nEstado: {self._estado}\n")
 
     @property
-    def nombre(self):
+    def nombre(self) -> str:
         return self._nombre
 
     @property
-    def estado(self):
+    def estado(self) -> str:
         return self._estado
 
     @property
-    def cpu(self):
+    def cpu(self) -> int:
         return self._cpu
 
     @cpu.setter
-    def cpu(self, numero):
-        if type(numero) is int:
-            if numero > 0:
-                self._cpu = numero
+    def cpu(self, numero: int) -> None:
+        try:
+            validaciones.es_cpu_valida(numero)
+        except excepciones.DatoNoEsNumerico:
+            try:
+                num = int(numero)
+            except ValueError:
+                raise ValueError("El dato tiene que ser un entero")
             else:
-                raise ValueError("El numero tiene que ser mayor que cero")
-        elif isinstance(numero, str):
-                try:
-                    num = int(numero)
-                except ValueError:
-                    raise ValueError("Tipo de dato no permitido")
+                if num > 0:
+                    self._cpu = num
                 else:
-                    if num > 0:
-                        self._cpu = num
-                    else:
-                        raise ValueError("El numero tiene que ser mayor que cero")
+                    raise excepciones.EsNumeroNegativo("La cantidad de CPU no puede ser negativa")
         else:
-            raise TypeError("Tipo de dato no permitido")
+            self._cpu = numero
 
     @property
-    def ram(self):
+    def ram(self) -> int:
         return self._ram
 
     @ram.setter
-    def ram(self, numero):
-        if type(numero) is int:
-            if numero > 0:
-                self._ram = numero
-            else:
-                raise ValueError("El numero tiene que ser mayor que cero")
-        else:
-            raise ValueError("Tipo de dato no permitido")
-
-    def cambiar_nombre(self, nombre):
-        if nombre.strip != "":
-            try: 
-                int(nombre)
+    def ram(self, numero: int) -> None:
+        try:
+            validaciones.es_ram_valida(numero)
+        except excepciones.DatoNoEsNumerico:
+            try:
+                num = int(numero)
             except ValueError:
-                raise ValueError("El nombre no puede ser solo un numero")
+                raise excepciones.DatoNoEsNumerico("El dato tiene que ser un entero")
             else:
-                self._nombre = nombre
+                if num > 0:
+                    self._ram = num
+                else:
+                    raise excepciones.EsNumeroNegativo("La cantidad de RAM no puede ser negativa")
         else:
-            raise ValueError("No se puede ingresar un nombre vacio")
+            self._ram = numero
+
+    def cambiar_nombre(self, nombre) -> None:
+        if nombre.strip != "":
+            if not nombre.isdigit():
+                self._nombre = nombre
+            else:
+                raise excepciones.DatoNoEsString("El nombre no puede ser un numero")     
+        else:
+            raise excepciones.NombreVacio("El nombre no puede estar vacio")
     
-    def desactivar(self):
+    def desactivar(self) -> None:
         self._estado = "inactivo"
 
-    def activar(self):
+    def activar(self) -> None:
         self._estado = "activo"
 
-    def poner_en_mantemiento(self):
+    def poner_en_mantemiento(self) -> None:
         self._estado = "mantenimiento"
+
+    def cambiar_estado(self, estado: str) -> None:
+        if isinstance(estado, str):
+            match estado:
+                case "activo":
+                    self.activar()
+                case "inactivo":
+                    self.desactivar()
+                case "mantenimiento":
+                    self.poner_en_mantemiento()
+                case _:
+                    raise excepciones.EstadoInvalido
+        else:
+            raise excepciones.DatoNoEsString

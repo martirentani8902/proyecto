@@ -1,9 +1,9 @@
-from servidores import operaciones
-from servidores.modelos import Servidor
-from servidores import excepciones
+from dominio.servidor import Servidor
+from dominio import excepciones
+from dominio.administrador import Administrador
 
-def calcular_cpu_activa(servidores):
-    lista_activos = operaciones.obtener_servidores_activos(servidores)
+def calcular_cpu_activa(admin):
+    lista_activos = admin.obtener_servidores_activos()
     suma = 0
     for servidor in lista_activos:
         suma += servidor.cpu
@@ -23,5 +23,5 @@ def contar_servidores(servidores):
                 inventario["inactivos"] += 1
         return inventario
     else:
-        raise excepciones.ListaVacia("No hay servidores")
+        raise excepciones.ListaVacia
 

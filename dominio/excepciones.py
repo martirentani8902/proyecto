@@ -15,3 +15,15 @@ class NombreVacio(Exception):
 
 class ServidorDuplicado(Exception):
     pass
+
+class EsNumeroNegativo(Exception):
+    pass
+
+class DatoNoEsNumerico(Exception):
+    pass
+
+class DatoNoEsString(Exception):
+    pass
+
+class EstadoInvalido(Exception):
+    pass
